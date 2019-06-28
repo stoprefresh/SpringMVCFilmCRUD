@@ -1,22 +1,7 @@
 ## Spring MVC Film C.R.U.D. Project
 
 
-### Team Spring/MVC/JDBC
+### Overview
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-### DANGER: ABORT DO NOT DELETE!
-### VIRUS DETECTED
-
-
+### Technologies Used

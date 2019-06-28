@@ -5,5 +5,4 @@ target
 *.war
 .gradle
 .classpath
-.settings
 .metadata

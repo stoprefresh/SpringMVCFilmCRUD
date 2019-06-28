@@ -1,4 +1,4 @@
-package com.skilldstillery.film.dao;
+package com.skilldistillery.film.dao;
 
 import java.sql.SQLException;
 import java.util.List;

@@ -101,9 +101,9 @@ public class FilmDAOImpl implements FilmDAO{
 				+ " f.rental_rate, f.length, f.replacement_cost, f.rating, f.special_features, l.name FROM film f"
 				+ " JOIN language l on l.id = f.language_id WHERE f.id = ?";
 		
-		try (Connection conn = DriverManager.getConnection(url, user, pass);
-				PreparedStatement pstmt = conn.prepareStatement(sql);){
-			
+		try {
+			Connection conn = DriverManager.getConnection(url, user, pass);
+			PreparedStatement pstmt = conn.prepareStatement(sql);
 			pstmt.setInt(1, filmId);
 			
 			ResultSet filmResult = pstmt.executeQuery();
@@ -130,18 +130,18 @@ public class FilmDAOImpl implements FilmDAO{
 		try {
 			if (rs.next()) {
 				film = new Film();
-				film.setId(rs.getInt("id"));
-				film.setTitle(rs.getString("title"));
-				film.setDescription(rs.getString("description"));
-				film.setReleaseYear(rs.getInt("release_year"));
-				film.setLangId(rs.getInt("language_id"));
-				film.setRentalDuration(rs.getInt("rental_duration"));
-				film.setLength(rs.getInt("length"));
-				film.setRentalRate(rs.getDouble("rental_rate"));
-				film.setReplacementCost(rs.getDouble("replacement_cost"));
-				film.setRating(rs.getString("rating"));
-				film.setSpecialFeatures(rs.getString("special_features"));	
-				film.setLanguage(rs.getString("language.name"));
+				film.setId(rs.getInt("f.id"));
+				film.setTitle(rs.getString("f.title"));
+				film.setDescription(rs.getString("f.description"));
+				film.setReleaseYear(rs.getInt("f.release_year"));
+				film.setLangId(rs.getInt("f.language_id"));
+				film.setRentalDuration(rs.getInt("f.rental_duration"));
+				film.setLength(rs.getInt("f.length"));
+				film.setRentalRate(rs.getDouble("f.rental_rate"));
+				film.setReplacementCost(rs.getDouble("f.replacement_cost"));
+				film.setRating(rs.getString("f.rating"));
+				film.setSpecialFeatures(rs.getString("f.special_features"));	
+				film.setLanguage(rs.getString("l.language.name"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

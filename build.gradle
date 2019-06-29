@@ -1,15 +1,15 @@
 apply plugin: 'java'
 apply plugin: 'war'
 
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+group = 'MVCFilmSite'
+version = '0.0.1-SNAPSHOT'
+
 war {
   archiveName = "${baseName}.war"
   destinationDir = file("./")      // Project root
-}
-
-project.webAppDirName = 'WebContent'
-
-repositories {
-  jcenter()
 }
 
 ext {
@@ -20,10 +20,18 @@ sourceSets.test {
   resources.srcDir "src/test/java"
 }
 
+project.webAppDirName = 'WebContent'
+
+repositories {
+  jcenter()
+}
+
+
 dependencies {
   compile group: 'org.springframework', name: 'spring-webmvc', version:"${springVersion}"
   compile group: 'javax.servlet', name: 'javax.servlet-api', version:'3.1.0'
   compile group: 'javax.servlet', name: 'jstl', version:'1.2'
   testCompile group: 'junit', name: 'junit', version: '4.12'
   testCompile group: 'org.springframework', name: 'spring-test', version:"${springVersion}"
+  
 }

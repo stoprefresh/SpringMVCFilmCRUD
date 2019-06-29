@@ -27,7 +27,7 @@ public class FilmController {
 	public ModelAndView getFilmByKeyWord(String keyword) {
 		ModelAndView mv = new ModelAndView();
 		List<Film> films = filmDao.getFilmByKeyword(keyword);
-		mv.addObject("film", films);
+		mv.addObject("films", films);
 		mv.setViewName("result");
 		return mv;
 	}

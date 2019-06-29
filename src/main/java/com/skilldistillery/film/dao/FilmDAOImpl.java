@@ -122,6 +122,7 @@ public class FilmDAOImpl implements FilmDAO{
 			
 			e.printStackTrace();
 		}
+		System.out.println(film);
 		return film;
 	}
 	

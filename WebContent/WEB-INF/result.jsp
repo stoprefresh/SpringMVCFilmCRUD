@@ -9,24 +9,33 @@
 <title>Films</title>
 </head>
 <body>
-  <c:choose>
+  <c:choose> 
     <c:when test="${! empty films}">
-    	<c:forEach var="film" items="${films }" }>
+    	<c:forEach var="films" items="${films }">
 	      <ul>
-	        <li>${film.title}</li>
-	        <li>${film.description}</li>
-	        <li>${film.releaseYear}</li>
-	        <li>${film.rating}</li>
-	        <li>${film.specialFeatures}</li>
+	        <li>${films.title}</li>
+	        <li>${films.description}</li>
+	        <li>${films.releaseYear}</li>
+	        <li>${films.rating}</li>
+	        <li>${films.specialFeatures}</li>
 	      </ul>
-	      <c:forEach var="actor" items="${films.filmActors }">
+	     <%--  <c:forEach var="actor" items="${films.filmActors }">
 	      	<ul>
 	      		<li>${actor.first_name }</li>
 	      		<li>${actor.last_name }</li>
 	      	</ul>
-	      </c:forEach>
+	      </c:forEach> --%>
 	      
       </c:forEach>c:forEach>
+    </c:when>
+    <c:when test="${! empty film}">
+	      <ul>
+	        <li>${films.title}</li>
+	        <li>${films.description}</li>
+	        <li>${films.releaseYear}</li>
+	        <li>${films.rating}</li>
+	        <li>${films.specialFeatures}</li>
+	      </ul>
     </c:when>
     <c:otherwise>
       <p>No films found</p>

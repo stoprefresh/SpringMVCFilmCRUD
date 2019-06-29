@@ -1,6 +1,6 @@
 package com.skilldistillery.film.dao;
 
-import java.sql.SQLException;
+
 import java.util.List;
 
 import com.skilldistillery.film.entities.*;
@@ -8,8 +8,8 @@ import com.skilldistillery.film.entities.*;
 
 public interface FilmDAO {
 	
-	public Film findFilmById(Integer filmId) throws SQLException;
-	public Film findFilmByKeyword(String keyword) throws SQLException;
-	public List<Actor> findActorsByFilmId(int filmId);
+	public Film getFilmById(Integer filmId);
+	public List<Film> getFilmByKeyword(String keyword);
+	public List<Actor> getActorsByFilmId(int filmId);
 
 }

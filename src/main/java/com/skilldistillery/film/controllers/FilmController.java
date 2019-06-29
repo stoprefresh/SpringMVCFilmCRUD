@@ -35,6 +35,10 @@ public class FilmController {
 	
 	@RequestMapping(path="GetFilmById.do", params = "id", method = RequestMethod.GET)
 	public ModelAndView getFilmById(Integer id) {
-		
+		ModelAndView mv = new ModelAndView();
+		Film film = filmDao.getFilmById(id);
+		mv.addObject("film", film);
+		mv.setViewName("result");
+		return mv;
 	}
 }

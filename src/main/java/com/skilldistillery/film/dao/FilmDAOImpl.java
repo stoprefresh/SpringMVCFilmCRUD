@@ -101,9 +101,10 @@ public class FilmDAOImpl implements FilmDAO{
 				+ " f.rental_rate, f.length, f.replacement_cost, f.rating, f.special_features, l.name FROM film f"
 				+ " JOIN language l on l.id = f.language_id WHERE f.id = ?";
 		
-		try {
-			Connection conn = DriverManager.getConnection(url, user, pass);
-			PreparedStatement pstmt = conn.prepareStatement(sql);
+		try (Connection conn = DriverManager.getConnection(url, user, pass);
+				PreparedStatement pstmt = conn.prepareStatement(sql);) {
+			
+			
 			pstmt.setInt(1, filmId);
 			
 			ResultSet filmResult = pstmt.executeQuery();

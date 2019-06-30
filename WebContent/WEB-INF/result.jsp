@@ -19,10 +19,10 @@
 	        <li>${f.rating}</li>
 	        <li>${f.specialFeatures}</li>
 	      </ul>
-	      <c:forEach var = "a" items="${films.filmActors }">
+	      <c:forEach var = "a" items="${f.filmActors }">
 	      	<ul>
-	      		<li>${a.first_name }</li>
-	      		<li>${a.last_name }</li>
+	      		<li>${a.firstName }</li>
+	      		<li>${a.lastName }</li>
 	      	</ul>
 	      </c:forEach>
 	      

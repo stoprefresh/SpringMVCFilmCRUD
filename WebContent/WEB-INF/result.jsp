@@ -11,30 +11,30 @@
 <body>
   <c:choose> 
     <c:when test="${! empty films}">
-    	<c:forEach var="films" items="${films }">
+    	<c:forEach var = "f" items="${films }">
 	      <ul>
-	        <li>${films.title}</li>
-	        <li>${films.description}</li>
-	        <li>${films.releaseYear}</li>
-	        <li>${films.rating}</li>
-	        <li>${films.specialFeatures}</li>
+	        <li>${f.title}</li>
+	        <li>${f.description}</li>
+	        <li>${f.releaseYear}</li>
+	        <li>${f.rating}</li>
+	        <li>${f.specialFeatures}</li>
 	      </ul>
-	     <%--  <c:forEach var="actor" items="${films.filmActors }">
+	      <c:forEach var = "a" items="${films.filmActors }">
 	      	<ul>
-	      		<li>${actor.first_name }</li>
-	      		<li>${actor.last_name }</li>
+	      		<li>${a.first_name }</li>
+	      		<li>${a.last_name }</li>
 	      	</ul>
-	      </c:forEach> --%>
+	      </c:forEach>
 	      
-      </c:forEach>c:forEach>
+      </c:forEach>
     </c:when>
     <c:when test="${! empty film}">
 	      <ul>
-	        <li>${films.title}</li>
-	        <li>${films.description}</li>
-	        <li>${films.releaseYear}</li>
-	        <li>${films.rating}</li>
-	        <li>${films.specialFeatures}</li>
+	        <li>${film.title}</li>
+	        <li>${film.description}</li>
+	        <li>${film.releaseYear}</li>
+	        <li>${film.rating}</li>
+	        <li>${film.specialFeatures}</li>
 	      </ul>
     </c:when>
     <c:otherwise>

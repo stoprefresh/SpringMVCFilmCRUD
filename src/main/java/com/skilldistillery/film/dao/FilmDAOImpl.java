@@ -19,6 +19,22 @@ public class FilmDAOImpl implements FilmDAO{
 			e.printStackTrace();
 		}
 	}
+	
+	
+	
+	@Override
+	public void removeFilmById(Integer filmId) {
+		String sql = "DELETE FROM film where id = ?";
+		try(Connection conn = DriverManager.getConnection(url, user, pass);
+				PreparedStatement pstmt = conn.prepareStatement(sql);){
+			
+			pstmt.setInt(1, filmId);
+			pstmt.executeUpdate();
+			
+		}catch(SQLException e) {
+			e.printStackTrace();
+		}	
+	}
 
 	@Override
 	public List<Film> getFilmByKeyword(String keyword) {
@@ -49,7 +65,6 @@ public class FilmDAOImpl implements FilmDAO{
 			}
 			filmResult.close();
 			
-			
 		}catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -59,7 +74,7 @@ public class FilmDAOImpl implements FilmDAO{
 
 
 	@Override
-	public List<Actor> getActorsByFilmId(int filmId) {
+	public List<Actor> getActorsByFilmId(Integer filmId) {
 		List<Actor> filmActors = new ArrayList<>();
 		Actor actor = null;
 		try {
@@ -146,6 +161,4 @@ public class FilmDAOImpl implements FilmDAO{
 		
 		return film;
 	}
-	
-	
 }

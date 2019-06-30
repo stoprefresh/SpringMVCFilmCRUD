@@ -10,6 +10,8 @@ public interface FilmDAO {
 	
 	public Film getFilmById(Integer filmId);
 	public List<Film> getFilmByKeyword(String keyword);
-	public List<Actor> getActorsByFilmId(int filmId);
+	public List<Actor> getActorsByFilmId(Integer filmId);
+	public void removeFilmById(Integer filmId);
+	public void addFilm();
 
 }

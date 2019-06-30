@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>Films</title>
+</head>
+<body>
+	<form action="AddNewFilm.do" method="POST">
+		<label for="title">Title:</label>
+		<input type="text" name="title">
+		<label for="description">Description:</label>
+		<textarea type="text" name="description"></textarea>
+		<label for="releaseYear">Release year:</label>
+		<input type="int" name="releaseYear">
+		<label for="langID">Language ID:</label>
+		<input type="int" name="langID">
+		<label for="rentalDuration">Rental Duration:</label>
+		<input type="double" name="rentalDuration">
+		<label for="rentalRate">Rental Rate:</label>
+		<input type="double" name="rentalRate">
+		<label for="length">Film  Length:</label>
+		<input type="double" name="length">
+		<label for="replacementCost">Replacement Cost:</label>
+		<input type="double" name="rentalCost">
+		<label for="rating">Film Rating:</label>
+		<input type="string" name="rating">
+		<label for="specialFeatures">Special Features:</label>
+		<input type="string" name="specialFeatures">
+		
+		<button type="submit" name=submit-btn>Add Film: </button>
+		
+	</form>
+</body>
+</html>

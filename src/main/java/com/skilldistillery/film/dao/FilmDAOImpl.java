@@ -1,19 +1,16 @@
 package com.skilldistillery.film.dao;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
+import java.sql.*;
+import java.util.*;
+
+
 
 import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
 public class FilmDAOImpl implements FilmDAO{
-	
-	private final String user = "student", pass = "student", url = "jdbc:mysql://localhost:3306/sdvid?useSSL=false";
+	private static String url = "jdbc:mysql://localhost:3306/sdvid?useSSL=false";
+	private final String user = "student", pass = "student";
 	
 	public FilmDAOImpl() {
 		try {
@@ -103,7 +100,6 @@ public class FilmDAOImpl implements FilmDAO{
 		
 		try (Connection conn = DriverManager.getConnection(url, user, pass);
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
-			
 			
 			pstmt.setInt(1, filmId);
 			

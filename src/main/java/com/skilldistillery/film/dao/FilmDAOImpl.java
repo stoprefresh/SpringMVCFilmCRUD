@@ -54,44 +54,6 @@ public class FilmDAOImpl implements FilmDAO{
 
 		return connectToSQL(sql, film);
 	}
-	
-	public Film addFilm(String title, String description, Integer releaseYear, Integer langId, Integer rentalDuration, Double rentalRate,
-			Integer length, Double replacementCost, String rating, String specialFeatures) {
-			Film film = null;
-		String sql = "INSERT INTO film (title, description, release_year, language_id, rental_duration,"
-				+ " rental_rate, length, replacement_cost, rating, special_features)"
-				+ " VALUES('?', '?', ?, ?, ?, ?, ?, ?, '?', '?')";
-		
-		String sqlCheck ="SELECT LAST_INSERT_ID()";
-	
-		try(Connection conn = DriverManager.getConnection(url, user, pass);
-				PreparedStatement pstmt = conn.prepareStatement(sql);
-				PreparedStatement checkSQL = conn.prepareStatement(sqlCheck);){
-			
-			pstmt.setString(1, title);
-			pstmt.setString(2, description);
-			pstmt.setInt(3, releaseYear);
-			pstmt.setInt(4, langId);
-			pstmt.setInt(5, rentalDuration);
-			pstmt.setDouble(6, rentalRate);
-			pstmt.setInt(7, length);
-			pstmt.setDouble(8, replacementCost);
-			pstmt.setString(9, rating);
-			pstmt.setString(10, specialFeatures);
-			
-			pstmt.executeUpdate();
-			
-			ResultSet rs = checkSQL.executeQuery();
-			
-			return getFilmById(rs.getInt(1));
-			
-			
-		}catch(SQLException e) {
-			e.printStackTrace();
-			return film;
-		}
-
-	}
 
 	@Override
 	public void removeFilmById(Integer filmId) {

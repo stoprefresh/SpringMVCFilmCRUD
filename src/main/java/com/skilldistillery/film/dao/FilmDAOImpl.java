@@ -19,8 +19,6 @@ import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
 
-
-
 @Repository
 public class FilmDAOImpl implements FilmDAO{
 
@@ -50,7 +48,7 @@ public class FilmDAOImpl implements FilmDAO{
 
 		String sql = "INSERT INTO film (title, description, release_year, language_id, rental_duration,"
 				+ " rental_rate, length, replacement_cost, rating, special_features)"
-				+ " VALUES('?', '?', ?, ?, ?, ?, ?, ?, '?', '?')";
+				+ " VALUES('?', '?', ?, ?, ?, ?, ?, ?, '?', ('?')";
 
 		return connectToSQL(sql, film);
 	}

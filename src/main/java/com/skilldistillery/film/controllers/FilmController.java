@@ -53,6 +53,17 @@ public class FilmController {
 		return mv;
 	}
 	
+	
+	@RequestMapping(path="AddNewFilm", method = RequestMethod.GET)
+	public ModelAndView addFilm() {
+		ModelAndView mv = new ModelAndView();
+		Film film = new Film();
+		
+		mv.addObject("film", film);
+		mv.setViewName("newFilmForm");
+		return mv;
+	}
+	
 	@RequestMapping(path="AddNewFilm.do", method = RequestMethod.POST)
 	public ModelAndView addFilm(@Valid Film film, Errors errors) {
 		ModelAndView mv = new ModelAndView();

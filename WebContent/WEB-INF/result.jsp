@@ -26,7 +26,7 @@
 					</ul>
 				</c:forEach>
 				<form:form action="GetDelete.do" method="POST" modelAttribute="films">
-				<form:input path="id" />
+				<%-- <form:input path="id" /> --%>
 					<input type="submit" value="Delete Film" />
 				</form:form>
 

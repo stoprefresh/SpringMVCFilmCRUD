@@ -23,7 +23,9 @@ public class FilmController {
 		this.filmDao = filmDao;
 	}
 	
-	@RequestMapping(path="GetFilmByKeyword.do", params="keyword", method = RequestMethod.GET)
+	
+	
+	@RequestMapping(path="GetFilmByKeyword.do", params="keyword",  method = RequestMethod.GET)
 	public ModelAndView getFilmByKeyWord(String keyword) {
 		ModelAndView mv = new ModelAndView();
 		List<Film> films = filmDao.getFilmByKeyword(keyword);
@@ -40,6 +42,4 @@ public class FilmController {
 		mv.setViewName("result");
 		return mv;
 	}
-	
-	
 }

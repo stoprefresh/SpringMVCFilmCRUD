@@ -8,8 +8,12 @@ import com.skilldistillery.film.entities.*;
 
 public interface FilmDAO {
 	
+	
 	public Film getFilmById(Integer filmId);
 	public List<Film> getFilmByKeyword(String keyword);
-	public List<Actor> getActorsByFilmId(int filmId);
-
+	public List<Actor> getActorsByFilmId(Integer filmId);
+	public void removeFilmById(Integer filmId);
+	public boolean addFilm(String title, String description, Integer releaseYear, Integer langId, Integer rentalDuration, Double rentalRate,
+			Integer length, Double replacementCost, String rating, String specialFeatures);
+	public boolean updateFilm();
 }

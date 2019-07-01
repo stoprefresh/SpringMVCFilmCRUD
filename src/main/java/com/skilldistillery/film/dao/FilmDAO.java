@@ -13,7 +13,6 @@ public interface FilmDAO {
 	public List<Film> getFilmByKeyword(String keyword);
 	public List<Actor> getActorsByFilmId(Integer filmId);
 	public void removeFilmById(Integer filmId);
-	public boolean addFilm(String title, String description, Integer releaseYear, Integer langId, Integer rentalDuration, Double rentalRate,
-			Integer length, Double replacementCost, String rating, String specialFeatures);
-	public boolean updateFilm();
+	public Film addFilm(Film film);
+	public Film updateFilm(Integer filmId, Film film);
 }

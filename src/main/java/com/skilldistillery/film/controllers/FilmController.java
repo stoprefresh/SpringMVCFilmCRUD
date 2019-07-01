@@ -9,26 +9,36 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import javax.validation.Valid;
+import org.springframework.validation.Errors;
+
 
 import com.skilldistillery.film.dao.FilmDAO;
+import com.skilldistillery.film.dao.FilmDAOImpl;
 import com.skilldistillery.film.entities.Film;
+import com.skilldistillery.film.entities.Search;
 
 @Controller
 public class FilmController {
 	
 	@Autowired
-	private FilmDAO filmDao;
+	private FilmDAOImpl filmDao;
 
-	public void setFilmDAO(FilmDAO filmDao) {
+	public void setFilmDAO(FilmDAOImpl filmDao) {
 		this.filmDao = filmDao;
 	}
 	
+	@RequestMapping(path="GetFilmByKeyword", method = RequestMethod.GET)
+	public ModelAndView getByKeyWord() {
+		Search s = new Search();
+		ModelAndView mv = new ModelAndView("searchByKeyword", "search", s);	
+		return mv;
+	}
 	
-	
-	@RequestMapping(path="GetFilmByKeyword.do", params="keyword",  method = RequestMethod.GET)
-	public ModelAndView getFilmByKeyWord(String keyword) {
+	@RequestMapping(path="GetFilmByKeyword.do", method = RequestMethod.POST)
+	public ModelAndView getFilmByKeyWord(Search s) {
 		ModelAndView mv = new ModelAndView();
-		List<Film> films = filmDao.getFilmByKeyword(keyword);
+		List<Film> films = filmDao.getFilmByKeyword(s.getKeyword());
 		mv.addObject("films", films);
 		mv.setViewName("result");
 		return mv;
@@ -42,4 +52,14 @@ public class FilmController {
 		mv.setViewName("result");
 		return mv;
 	}
+	
+	@RequestMapping(path="AddNewFilm.do", method = RequestMethod.POST)
+	public ModelAndView addFilm(@Valid Film film, Errors errors) {
+		ModelAndView mv = new ModelAndView();
+		
+		mv.addObject("film", film);
+		mv.setViewName("result");
+		return mv;
+	}
+	
 }

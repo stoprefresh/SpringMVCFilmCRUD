@@ -1,13 +1,19 @@
 package com.skilldistillery.film.dao;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
-
+import org.springframework.stereotype.Repository;
 
 import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
+@Repository
 public class FilmDAOImpl implements FilmDAO{
 	private static String url = "jdbc:mysql://localhost:3306/sdvid?useSSL=false";
 	private final String user = "student", pass = "student";
@@ -21,9 +27,9 @@ public class FilmDAOImpl implements FilmDAO{
 	}
 	
 	@Override
-	public boolean addFilm(String title, String description, Integer releaseYear, Integer langId, Integer rentalDuration, Double rentalRate,
+	public Film addFilm(String title, String description, Integer releaseYear, Integer langId, Integer rentalDuration, Double rentalRate,
 			Integer length, Double replacementCost, String rating, String specialFeatures) {
-		
+			Film film = null;
 		String sql = "INSERT INTO film (title, description, release_year, language_id, rental_duration,"
 				+ " rental_rate, length, replacement_cost, rating, special_features)"
 				+ " VALUES('?', '?', ?, ?, ?, ?, ?, ?, '?', '?')";
@@ -49,18 +55,12 @@ public class FilmDAOImpl implements FilmDAO{
 			
 			ResultSet rs = checkSQL.executeQuery();
 			
-			Film film = getFilmById(rs.getInt(1));
+			return getFilmById(rs.getInt(1));
 			
-			if(film != null) {
-				return true;
-			}
-			else {
-				return false;
-			}
 			
 		}catch(SQLException e) {
 			e.printStackTrace();
-			return false;
+			return film;
 		}
 	}
 	
@@ -209,11 +209,6 @@ public class FilmDAOImpl implements FilmDAO{
 
 	@Override
 	public boolean updateFilm() {
-		// TODO Auto-generated method stub
 		return false;
 	}
-
-	}	
-	
-
 }

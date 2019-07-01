@@ -87,7 +87,7 @@ public class FilmController {
 		
 		ModelAndView mv = new ModelAndView();
 		filmDao.removeFilmById(s.getId());
-		mv.setViewName("index");
+		mv.setViewName("result");
 
 		return mv;
 	}

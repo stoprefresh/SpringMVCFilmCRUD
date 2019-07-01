@@ -25,9 +25,10 @@
 						<li>${a.lastName }</li>
 					</ul>
 				</c:forEach>
-				<form action="GetDelete.do" method="POST">
+				<form:form action="GetDelete.do" method="POST" modelAttribute="films">
+				<form:input path="id" />
 					<input type="submit" value="Delete Film" />
-				</form>
+				</form:form>
 
 			</c:forEach>
 		</c:when>
@@ -37,9 +38,10 @@
 				<li>${film.description}</li>
 				<li>${film.releaseYear}</li>
 				<li>${film.rating}</li>
-				<form action="GetDelete.do" method="POST">
+				<form:form action="GetDelete.do" method="POST" modelAttribute="film">
+				<form:input path="id" />
 					<input type="submit" value="Delete Film" />
-				</form>
+				</form:form>
 				<%-- <li>${film.specialFeatures}</li> --%>
 			</ul>
 		</c:when>

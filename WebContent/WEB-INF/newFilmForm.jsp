@@ -49,7 +49,7 @@
 		<form:label path="specialFeatures">Special Features:</form:label>
 		<form:input path="specialFeatures"/>
 		<br>		
-		<input type="submit" value="SUBMIT">Add Film: />		
+		<input type="submit" value="SUBMIT"/>		
 	</form:form>
 </body>
 </html>

@@ -1,0 +1,12 @@
+@charset "UTF-8";
+
+form {
+	display: flex;
+    flex-direction: column;
+    width: 250px;
+    justify-content: center;
+    align-items: center;
+    margin: auto;
+    border: 1px solid gray;
+    padding: 5px;
+}

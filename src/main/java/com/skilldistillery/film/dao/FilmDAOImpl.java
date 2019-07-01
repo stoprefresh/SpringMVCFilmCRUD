@@ -68,13 +68,16 @@ public class FilmDAOImpl implements FilmDAO{
 	public Film addFilm(Film film) {
 		Film f = film;
 		String sql = "INSERT INTO film (title, description, release_year, language_id, rental_duration,"
-				+ " rental_rate, length, replacement_cost, rating, special_features)"
-				+ " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, (?))";
-		String sqlCheck = "SELECT LAST_INSERT_ID()";
+				+ " rental_rate, length, replacement_cost, rating)"
+				+ " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)";
+//		String sqlCheck = "SELECT LAST_INSERT_ID()";
+		int newID = 0;
 
 		try (Connection conn = DriverManager.getConnection(url, user, pass);
-				PreparedStatement pstmt = conn.prepareStatement(sql);
-				PreparedStatement checkSQL = conn.prepareStatement(sqlCheck);) {
+				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+//				PreparedStatement checkSQL = conn.prepareStatement(sqlCheck);
+				) {
+//			conn.setAutoCommit(false);
 
 			pstmt.setString(1, f.getTitle());
 			pstmt.setString(2, f.getDescription());
@@ -85,20 +88,23 @@ public class FilmDAOImpl implements FilmDAO{
 			pstmt.setInt(7, f.getLength());
 			pstmt.setDouble(8, f.getReplacementCost());
 			pstmt.setString(9, f.getRating());
-			pstmt.setString(10, f.getSpecialFeatures());
-			
-			System.out.println("++++++++++++++++++" + sqlCheck);
 			
 			pstmt.executeUpdate();
 
-			ResultSet rs = checkSQL.executeQuery();
+			ResultSet keys = pstmt.getGeneratedKeys();
+			while (keys.next()) {
+				int newId = keys.getInt(1);
+				System.out.println(newId);
+				newID = newId;
+			}
+//			conn.commit();
 
-			return getFilmById(rs.getInt(1));
 
 		} catch (SQLException e) {
 			e.printStackTrace();
 			return f;
 		}
+		return getFilmById(newID);
 	}
 	
 	

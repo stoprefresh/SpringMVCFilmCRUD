@@ -75,7 +75,7 @@ public class FilmController {
 	@RequestMapping(path="AddNewFilm.do", method = RequestMethod.POST)
 	public ModelAndView addFilm(@Valid Film film, Errors errors) {
 		ModelAndView mv = new ModelAndView();
-		System.out.println("+++++++++++++++++++++++");
+		System.out.println("======================");
 		System.out.println(film);
 		Film f = filmDao.addFilm(film);
 		System.out.println(f);

@@ -1,5 +1,9 @@
 package com.skilldistillery.film.dao;
 
+
+import java.sql.*;
+import java.util.*;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -10,14 +14,19 @@ import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
+
 import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
+
+
+
 @Repository
 public class FilmDAOImpl implements FilmDAO{
+
 	private static String url = "jdbc:mysql://localhost:3306/sdvid?useSSL=false";
 	private final String user = "student", pass = "student";
-	
+
 	public FilmDAOImpl() {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
@@ -25,8 +34,27 @@ public class FilmDAOImpl implements FilmDAO{
 			e.printStackTrace();
 		}
 	}
-	
+
 	@Override
+	public Film updateFilm(Integer filmId, Film film) {
+
+		String sql = "UPDATE film SET title='?', description='?', release_year=?, language_id=?, rental_duration=?, "
+				+ "rental_rate=?, length=?, replacement_cost=?, rating='?', special_features='?' " + "WHERE id =" + filmId;
+
+		return connectToSQL(sql, film);
+	}
+
+	@Override
+
+	public Film addFilm(Film film) {
+
+		String sql = "INSERT INTO film (title, description, release_year, language_id, rental_duration,"
+				+ " rental_rate, length, replacement_cost, rating, special_features)"
+				+ " VALUES('?', '?', ?, ?, ?, ?, ?, ?, '?', '?')";
+
+		return connectToSQL(sql, film);
+	}
+	
 	public Film addFilm(String title, String description, Integer releaseYear, Integer langId, Integer rentalDuration, Double rentalRate,
 			Integer length, Double replacementCost, String rating, String specialFeatures) {
 			Film film = null;
@@ -62,22 +90,21 @@ public class FilmDAOImpl implements FilmDAO{
 			e.printStackTrace();
 			return film;
 		}
+
 	}
-	
-	
-	
+
 	@Override
 	public void removeFilmById(Integer filmId) {
 		String sql = "DELETE FROM film where id = ?";
-		try(Connection conn = DriverManager.getConnection(url, user, pass);
-				PreparedStatement pstmt = conn.prepareStatement(sql);){
-			
+		try (Connection conn = DriverManager.getConnection(url, user, pass);
+				PreparedStatement pstmt = conn.prepareStatement(sql);) {
+
 			pstmt.setInt(1, filmId);
 			pstmt.executeUpdate();
-			
-		}catch(SQLException e) {
+
+		} catch (SQLException e) {
 			e.printStackTrace();
-		}	
+		}
 	}
 
 	@Override
@@ -87,35 +114,34 @@ public class FilmDAOImpl implements FilmDAO{
 		String sql = "SELECT f.id, f.title, f.description, f.release_year, f.language_id, f.rental_duration,"
 				+ " f.rental_rate, f.length, f.replacement_cost, f.rating, f.special_features, l.name FROM film f"
 				+ " JOIN language l on l.id = f.language_id WHERE title LIKE ? OR description LIKE ?";
-		
-		try(Connection conn = DriverManager.getConnection(url, user, pass);
-				PreparedStatement pstmt = conn.prepareStatement(sql);){
-			
+
+		try (Connection conn = DriverManager.getConnection(url, user, pass);
+				PreparedStatement pstmt = conn.prepareStatement(sql);) {
+
 			pstmt.setString(1, "%" + keyword + "%");
 			pstmt.setString(2, "%" + keyword + "%");
-			
+
 			ResultSet filmResult = pstmt.executeQuery();
-			
+
 			while (filmResult.next()) {
-				
+
 				film = setFilmData(film, filmResult);
 
 				if (film != null) {
-					System.out.println(film);
+
 					film.setFilmActors(getActorsByFilmId(film.getId()));
 					films.add(film);
 				}
-				
+
 			}
 			filmResult.close();
-			
-		}catch (SQLException e) {
-			
+
+		} catch (SQLException e) {
+
 			e.printStackTrace();
 		}
 		return films;
 	}
-
 
 	@Override
 	public List<Actor> getActorsByFilmId(Integer filmId) {
@@ -149,40 +175,72 @@ public class FilmDAOImpl implements FilmDAO{
 		return filmActors;
 	}
 
-
 	@Override
 	public Film getFilmById(Integer filmId) {
 		Film film = null;
 		String sql = "SELECT f.id, f.title, f.description, f.release_year, f.language_id, f.rental_duration,"
 				+ " f.rental_rate, f.length, f.replacement_cost, f.rating, f.special_features, l.name FROM film f"
 				+ " JOIN language l on l.id = f.language_id WHERE f.id = ?";
-		
+
 		try (Connection conn = DriverManager.getConnection(url, user, pass);
 				PreparedStatement pstmt = conn.prepareStatement(sql);) {
-			
+
 			pstmt.setInt(1, filmId);
-			
+
 			ResultSet filmResult = pstmt.executeQuery();
-			
+
 			film = setFilmData(film, filmResult);
 
 			if (film != null) {
-				System.out.println(film);
+
 				film.setFilmActors(getActorsByFilmId(filmId));
-				
-			} 
-			
+
+			}
+
 			filmResult.close();
-			
+
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
-		System.out.println(film);
+
 		return film;
 	}
-	
+
+	public Film connectToSQL(String sql, Film film) {
+
+		Film f = film;
+		String sqlCheck = "SELECT LAST_INSERT_ID()";
+
+		try (Connection conn = DriverManager.getConnection(url, user, pass);
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				PreparedStatement checkSQL = conn.prepareStatement(sqlCheck);) {
+
+			pstmt.setString(1, f.getTitle());
+			pstmt.setString(2, f.getDescription());
+			pstmt.setInt(3, f.getReleaseYear());
+			pstmt.setInt(4, f.getLangId());
+			pstmt.setInt(5, f.getRentalDuration());
+			pstmt.setDouble(6, f.getRentalRate());
+			pstmt.setInt(7, f.getLength());
+			pstmt.setDouble(8, f.getReplacementCost());
+			pstmt.setString(9, f.getRating());
+			pstmt.setString(10, f.getSpecialFeatures());
+
+			pstmt.executeUpdate();
+
+			ResultSet rs = checkSQL.executeQuery();
+
+			return getFilmById(rs.getInt(1));
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return f;
+		}
+	}
+
 	public Film setFilmData(Film film, ResultSet rs) {
+
 		try {
 			if (rs.next()) {
 				film = new Film();
@@ -196,19 +254,15 @@ public class FilmDAOImpl implements FilmDAO{
 				film.setRentalRate(rs.getDouble("f.rental_rate"));
 				film.setReplacementCost(rs.getDouble("f.replacement_cost"));
 				film.setRating(rs.getString("f.rating"));
-				film.setSpecialFeatures(rs.getString("f.special_features"));	
+				film.setSpecialFeatures(rs.getString("f.special_features"));
 				film.setLanguage(rs.getString("l.language.name"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
+
 		return film;
 
-	}
-
-	@Override
-	public boolean updateFilm() {
-		return false;
 	}
 }

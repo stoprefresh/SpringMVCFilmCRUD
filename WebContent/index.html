@@ -2,14 +2,17 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Films</title>
+<title>Films with Friends</title>
 </head>
 <body>
-	<h1>Find</h1>
-	<a href="findIdForm.html">Search Films By ID</a>
-	<br />
-	<a href="findKeywordForm.html">Search Films by Keyword</a>
-	<br />
-	<a href="newFilmForm.html">Add a new film to collection</a>
+	<form action="GetFilmByKeyword.do" method="GET">
+		<input type="submit" value="GET FILM BY KEYWORD" />
+	</form>
+	<form action="GetFilmById.do" method="GET">
+		<input type="submit" value="GET FILM BY ID" />
+	</form>
+	<form action="AddNewFilm.do" method="GET">
+		<input type="submit" value="ADD NEW FILM" />
+	</form>
 </body>
 </html>

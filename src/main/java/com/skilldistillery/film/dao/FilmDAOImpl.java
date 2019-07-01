@@ -73,7 +73,7 @@ public class FilmDAOImpl implements FilmDAO{
 		String sqlCheck = "SELECT LAST_INSERT_ID()";
 
 		try (Connection conn = DriverManager.getConnection(url, user, pass);
-				PreparedStatement pstmt = conn.prepareStatement(sql);
+				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				PreparedStatement checkSQL = conn.prepareStatement(sqlCheck);) {
 
 			pstmt.setString(1, f.getTitle());
@@ -86,8 +86,6 @@ public class FilmDAOImpl implements FilmDAO{
 			pstmt.setDouble(8, f.getReplacementCost());
 			pstmt.setString(9, f.getRating());
 			pstmt.setString(10, f.getSpecialFeatures());
-			
-			System.out.println("++++++++++++++++++" + sqlCheck);
 			
 			pstmt.executeUpdate();
 

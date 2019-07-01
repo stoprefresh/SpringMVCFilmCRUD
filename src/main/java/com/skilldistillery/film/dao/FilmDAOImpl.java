@@ -69,7 +69,7 @@ public class FilmDAOImpl implements FilmDAO{
 		Film f = film;
 		String sql = "INSERT INTO film (title, description, release_year, language_id, rental_duration,"
 				+ " rental_rate, length, replacement_cost, rating, special_features)"
-				+ " VALUES('?', '?', ?, ?, ?, ?, ?, ?, '?', ('?'))";
+				+ " VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?, (?))";
 		String sqlCheck = "SELECT LAST_INSERT_ID()";
 
 		try (Connection conn = DriverManager.getConnection(url, user, pass);
@@ -86,6 +86,8 @@ public class FilmDAOImpl implements FilmDAO{
 			pstmt.setDouble(8, f.getReplacementCost());
 			pstmt.setString(9, f.getRating());
 			pstmt.setString(10, f.getSpecialFeatures());
+			
+			System.out.println("++++++++++++++++++" + sqlCheck);
 			
 			pstmt.executeUpdate();
 

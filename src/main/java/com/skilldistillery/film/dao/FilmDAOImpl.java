@@ -37,23 +37,71 @@ public class FilmDAOImpl implements FilmDAO{
 
 	@Override
 	public Film updateFilm(Integer filmId, Film film) {
-
+		Film f = film;
 		String sql = "UPDATE film SET title='?', description='?', release_year=?, language_id=?, rental_duration=?, "
-				+ "rental_rate=?, length=?, replacement_cost=?, rating='?', special_features='?' " + "WHERE id =" + filmId;
+				+ "rental_rate=?, length=?, replacement_cost=?, rating='?', special_features='?' " + "WHERE id =?";
+		
+		try (Connection conn = DriverManager.getConnection(url, user, pass);
+				PreparedStatement pstmt = conn.prepareStatement(sql);) {
 
-		return connectToSQL(sql, film);
+			pstmt.setString(1, f.getTitle());
+			pstmt.setString(2, f.getDescription());
+			pstmt.setInt(3, f.getReleaseYear());
+			pstmt.setInt(4, f.getLangId());
+			pstmt.setInt(5, f.getRentalDuration());
+			pstmt.setDouble(6, f.getRentalRate());
+			pstmt.setInt(7, f.getLength());
+			pstmt.setDouble(8, f.getReplacementCost());
+			pstmt.setString(9, f.getRating());
+			pstmt.setString(10, f.getSpecialFeatures());
+			pstmt.setInt(11, filmId);
+
+			pstmt.executeUpdate();
+
+			return getFilmById(filmId);
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return f;
+		}
 	}
-
+	
 	@Override
-
 	public Film addFilm(Film film) {
-
+		Film f = film;
 		String sql = "INSERT INTO film (title, description, release_year, language_id, rental_duration,"
 				+ " rental_rate, length, replacement_cost, rating, special_features)"
-				+ " VALUES('?', '?', ?, ?, ?, ?, ?, ?, '?', '?')";
+				+ " VALUES('?', '?', ?, ?, ?, ?, ?, ?, '?', ('?'))";
+		String sqlCheck = "SELECT LAST_INSERT_ID()";
 
-		return connectToSQL(sql, film);
+		try (Connection conn = DriverManager.getConnection(url, user, pass);
+				PreparedStatement pstmt = conn.prepareStatement(sql);
+				PreparedStatement checkSQL = conn.prepareStatement(sqlCheck);) {
+
+			pstmt.setString(1, f.getTitle());
+			pstmt.setString(2, f.getDescription());
+			pstmt.setInt(3, f.getReleaseYear());
+			pstmt.setInt(4, f.getLangId());
+			pstmt.setInt(5, f.getRentalDuration());
+			pstmt.setDouble(6, f.getRentalRate());
+			pstmt.setInt(7, f.getLength());
+			pstmt.setDouble(8, f.getReplacementCost());
+			pstmt.setString(9, f.getRating());
+			pstmt.setString(10, f.getSpecialFeatures());
+			
+			pstmt.executeUpdate();
+
+			ResultSet rs = checkSQL.executeQuery();
+
+			return getFilmById(rs.getInt(1));
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			return f;
+		}
 	}
+	
+	
 
 	@Override
 	public void removeFilmById(Integer filmId) {
@@ -169,37 +217,7 @@ public class FilmDAOImpl implements FilmDAO{
 		return film;
 	}
 
-	public Film connectToSQL(String sql, Film film) {
-
-		Film f = film;
-		String sqlCheck = "SELECT LAST_INSERT_ID()";
-
-		try (Connection conn = DriverManager.getConnection(url, user, pass);
-				PreparedStatement pstmt = conn.prepareStatement(sql);
-				PreparedStatement checkSQL = conn.prepareStatement(sqlCheck);) {
-
-			pstmt.setString(1, f.getTitle());
-			pstmt.setString(2, f.getDescription());
-			pstmt.setInt(3, f.getReleaseYear());
-			pstmt.setInt(4, f.getLangId());
-			pstmt.setInt(5, f.getRentalDuration());
-			pstmt.setDouble(6, f.getRentalRate());
-			pstmt.setInt(7, f.getLength());
-			pstmt.setDouble(8, f.getReplacementCost());
-			pstmt.setString(9, f.getRating());
-			pstmt.setString(10, f.getSpecialFeatures());
-
-			pstmt.executeUpdate();
-
-			ResultSet rs = checkSQL.executeQuery();
-
-			return getFilmById(rs.getInt(1));
-
-		} catch (SQLException e) {
-			e.printStackTrace();
-			return f;
-		}
-	}
+	
 
 	public Film setFilmData(Film film, ResultSet rs) {
 

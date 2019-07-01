@@ -19,8 +19,6 @@ import com.skilldistillery.film.entities.Actor;
 import com.skilldistillery.film.entities.Film;
 
 
-
-
 @Repository
 public class FilmDAOImpl implements FilmDAO{
 
@@ -235,7 +233,7 @@ public class FilmDAOImpl implements FilmDAO{
 				film.setReplacementCost(rs.getDouble("f.replacement_cost"));
 				film.setRating(rs.getString("f.rating"));
 				film.setSpecialFeatures(rs.getString("f.special_features"));
-				film.setLanguage(rs.getString("l.language.name"));
+				film.setLanguage(rs.getString("l.name"));
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();

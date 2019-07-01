@@ -9,7 +9,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Films</title>
-<!-- <link rel="stylesheet" href="newFilmForm.css"> -->
+<link rel="stylesheet" href="newFilmForm.css">
 </head>
 <body>
 	<form:form action="AddNewFilm.do" method="POST" modelAttribute="film">
@@ -25,9 +25,9 @@
 		<form:input path="releaseYear"/>
 		<form:errors path="releaseYear" />
 		<br>
-		<form:label path="langID">Language ID:</form:label>
-		<form:input path="langID"/>
-		<form:errors path="langID" />
+		<form:label path="langId">Language ID:</form:label>
+		<form:input path="langId"/>
+		<form:errors path="langId" />
 		<br>
 		<form:label path="rentalDuration">Rental Duration:</form:label>
 		<form:input path="rentalDuration"/>
@@ -49,7 +49,7 @@
 		<form:label path="specialFeatures">Special Features:</form:label>
 		<form:input path="specialFeatures"/>
 		<br>		
-		<input type="submit" value="SUBMIT">Add Film: />		
+		<input type="submit" value="SUBMIT"/>		
 	</form:form>
 </body>
 </html>

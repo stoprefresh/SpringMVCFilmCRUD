@@ -27,13 +27,7 @@ public class FilmController {
 	public void setFilmDAO(FilmDAOImpl filmDao) {
 		this.filmDao = filmDao;
 	}
-	
-	
-	
-	
-	
-	
-	
+
 	@RequestMapping(path="GetFilmByKeyword", method = RequestMethod.GET)
 	public ModelAndView getByKeyWord() {
 		Search s = new Search();
@@ -67,22 +61,36 @@ public class FilmController {
 		return mv;
 	}
 	
+	
+	@RequestMapping(path="AddNewFilm", method = RequestMethod.GET)
+	public ModelAndView addAFilm() {
+		ModelAndView mv = new ModelAndView();
+		Film film = new Film();
+		
+		mv.addObject("film", film);
+		mv.setViewName("newFilmForm");
+		return mv;
+	}
+
+	@RequestMapping(path="AddNewFilm.do", method = RequestMethod.POST)
+	public ModelAndView addFilm(@Valid Film film, Errors errors) {
+		ModelAndView mv = new ModelAndView();
+		Film f = filmDao.addFilm(film);
+		System.out.println(f);
+		mv.addObject("film", f);
+		mv.setViewName("result");
+		return mv;
+	}
+
 	@RequestMapping(path="GetDelete.do", method = RequestMethod.POST)
 	public ModelAndView getDelete(Search s) {
 		
 		ModelAndView mv = new ModelAndView();
 		filmDao.removeFilmById(s.getId());
 		mv.setViewName("index");
+
 		return mv;
 	}
 	
-	@RequestMapping(path="AddNewFilm.do", method = RequestMethod.POST)
-	public ModelAndView addFilm(@Valid Film film, Errors errors) {
-		ModelAndView mv = new ModelAndView();
-		
-		mv.addObject("film", film);
-		mv.setViewName("result");
-		return mv;
-	}
 	
 }
